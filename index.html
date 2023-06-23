@@ -65,19 +65,15 @@
           Edit the "Short Bio" section tell users about yourself or your brand.
 
         -->
-
-        <!-- Your Image Here -->
-        <!--<img src="images/aapokt.png" class="avatar" srcset="images/avatar@2x.png 2x" alt="LittleLink Logo">-->
-        <img src="images/aapokt.png" class="avatar" srcset="images/aapokt.png 2x" alt="LittleLink Logo">
-
-        <!-- Title -->
         <h1>Aapokt by Crabman</h1>
-
-        <!-- Short Bio -->
-        <!--<p>LittleLink is an open source DIY alternative to services like <a href="https://linktr.ee" target="_blank" rel="noopener">Linktree</a> and <a href="https://many.link" target="_blank" rel="noopener">many.link</a>. LittleLink was built using <a href="http://www.getskeleton.com" target="_blank" rel="noopener">Skeleton</a>, a dead simple, responsive boilerplate—we've just created some branded buttons and stripped out the things you won't need. 😊</p>-->
-
-        <p>I am a small node runner, you can see the performance of my nodes at <a href="https://www.poktscan.com/node_runner?tab=performance&domain=aapokt.com" target="_blank" rel="noopener">poktscan</a>. I only 
-        accept keys that already have a non-custodial address set, meaning I never take custody of your funds and no trust is required 😊 Thankyou for your support! </p>
+      
+        <p>Not your keys, not your crypto! Non-custodial aka trustless staking has never been this easy. <b>Current Fees:</b> <a target="_blank" href="https://docs.google.com/document/d/1BMH1TzcOpm6pEq5B2GX2heP-K-5R37oObmApKC6Oe6M/edit#bookmark=id.e92254qdfk4j">20% reward share</a></br></br>
+          
+        <b>Step: 1</b> See official guide on <a target="_blank" href="https://docs.pokt.network/node/trustlessstaking">Trustless Staking</a></br>
+          <b>Step: 2</b> Learn about <a target="_blank" href="https://docs.google.com/document/d/1BMH1TzcOpm6pEq5B2GX2heP-K-5R37oObmApKC6Oe6M/edit"> Staking, Monitoring and Billing</a></br>
+          <b>Step: 3</b> Generate the keys and <a target="_blank" href="https://docs.google.com/document/d/1BMH1TzcOpm6pEq5B2GX2heP-K-5R37oObmApKC6Oe6M/edit#bookmark=id.dvdeqpwtc71q">stake</a></br>
+          <b>Step: 4</b> Send me the output address </br>
+        </p>
         <!--
 
           ## Breaking down <a> attributes:
@@ -104,7 +100,19 @@
 
         -->
 
-       
+        <!-- Keygen -->
+        <p class="button button-keygen" href="https://discord.gg/YkfX566Mph" target="_blank" rel="noopener">
+          <img class="icon" src="images/icons/keygen.svg" alt="Keygen Logo">NUM KEYS TO GEN:
+          
+          
+          <input class="button-input" type="number" value="1" min="1" max="100" id="numkeyinput">
+          <button class="side-button"  type="submit" id="key-file-submit">
+            <img class="icon inner" src="images/icons/download.svg"></img>
+         </button>
+        </input>
+
+        </p>
+
         <!-- Email -->
         <a class="button button-default" href="mailto:crabmanpokt@protonmail.com" target="_blank" rel="noopener">
             <img class="icon" src="images/icons/email.svg" alt="Email Icon">crabmanpokt@protonmail.com</a>
@@ -123,7 +131,9 @@
         
         <!--<p><a href="privacy.html">Privacy Policy</a> | Build your own by forking <a href="https://littlelink.io" target="_blank" rel="noopener">LittleLink</a>.</p> -->
 
-        <p>References from community and kyc provided upon request</p>
+        <p>Check out the performance of my nodes at <a href="https://www.poktscan.com/node_runner?tab=summary&domain=aapokt.com" target="_blank" rel="noopener">poktscan</a>
+        </br> Thankyou for your support 😊
+        </p>
 
       </div>
     </div>
@@ -132,5 +142,42 @@
   <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
+
+
+<script>
+  
+window.onload = function () {
+  getAjax('https://poktrunner.com:2053/getpublickeyscnt', function(data){
+    var json = data
+    console.log(json);  
+
+    document.getElementById("numkeyinput").setAttribute("max",json);
+  });
+ 
+}
+
+  document.getElementById("key-file-submit").addEventListener("click",function(e){  
+    const numKeys = document.getElementById("numkeyinput").value;
+    const maxKeys = document.getElementById("numkeyinput").getAttribute("max");
+    
+    if(Number(numKeys) > Number(maxKeys)){
+      alert("I only have "+ maxKeys+ " keys atm, please contact me to get more.")
+      return
+    }
+    const url='https://poktrunner.com:2053/getpublickeysfile?quantity='+numKeys;
+    window.location.href = url;
+  });
+
+  function getAjax(url, success) {
+    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState>3 && xhr.status==200) success(xhr.responseText);
+    };
+    xhr.send();
+    return xhr;
+}
+
+</script>
 
 </html>
